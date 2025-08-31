@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/samruman-show/static/css/main.ad90d634.css",
+    "main.js": "/samruman-show/static/js/main.18d1d1cf.js",
+    "index.html": "/samruman-show/index.html",
+    "main.ad90d634.css.map": "/samruman-show/static/css/main.ad90d634.css.map",
+    "main.18d1d1cf.js.map": "/samruman-show/static/js/main.18d1d1cf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ad90d634.css",
+    "static/js/main.18d1d1cf.js"
+  ]
+}
