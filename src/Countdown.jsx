@@ -40,22 +40,22 @@ export default function Countdown() {
     <div className="countdown-container">
       {/* 공포스러운 배경 이미지들 */}
       <img 
-        src={process.env.PUBLIC_URL + '/img/ghost.png'}
+        src={'img/ghost.png'}
         alt="" 
         className="horror-bg-ghost"
       />
       <img 
-        src={process.env.PUBLIC_URL + '/img/joker.png'}
+        src={'img/joker.png'}
         alt="" 
         className="horror-bg-joker"
       />
       <img 
-        src={process.env.PUBLIC_URL + '/img/impressed.png'}
+        src={'img/impressed.png'}
         alt="" 
         className="horror-bg-impressed"
       />
       <img
-        src={process.env.PUBLIC_URL + '/img/something.png'}
+        src={'img/something.png'}
         alt="" 
         className="horror-bg-something"
       />
