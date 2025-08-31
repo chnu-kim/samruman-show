@@ -40,22 +40,22 @@ export default function Countdown() {
     <div className="countdown-container">
       {/* 공포스러운 배경 이미지들 */}
       <img 
-        src="https://raw.githubusercontent.com/chnu-kim/samruman-show/refs/heads/master/public/img/ghost.png"
+        src="https://raw.githubusercontent.com/chnu-kim/samruman-show/refs/heads/main/public/img/ghost.png"
         alt="" 
         className="horror-bg-ghost"
       />
       <img 
-        src="https://raw.githubusercontent.com/chnu-kim/samruman-show/refs/heads/master/public/img/joker.png"
+        src="https://raw.githubusercontent.com/chnu-kim/samruman-show/refs/heads/main/public/img/joker.png"
         alt="" 
         className="horror-bg-joker"
       />
       <img 
-        src="https://raw.githubusercontent.com/chnu-kim/samruman-show/refs/heads/master/public/img/impressed.png"
+        src="https://raw.githubusercontent.com/chnu-kim/samruman-show/refs/heads/main/public/img/impressed.png"
         alt="" 
         className="horror-bg-impressed"
       />
       <img
-        src="https://raw.githubusercontent.com/chnu-kim/samruman-show/refs/heads/master/public/img/something.png"
+        src="https://raw.githubusercontent.com/chnu-kim/samruman-show/refs/heads/main/public/img/something.png"
         alt="" 
         className="horror-bg-something"
       />
