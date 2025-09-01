@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/samruman-show/static/css/main.f174acb2.css",
-    "main.js": "/samruman-show/static/js/main.fbf218bf.js",
+    "main.js": "/samruman-show/static/js/main.fb8dbcfd.js",
     "index.html": "/samruman-show/index.html",
     "main.f174acb2.css.map": "/samruman-show/static/css/main.f174acb2.css.map",
-    "main.fbf218bf.js.map": "/samruman-show/static/js/main.fbf218bf.js.map"
+    "main.fb8dbcfd.js.map": "/samruman-show/static/js/main.fb8dbcfd.js.map"
   },
   "entrypoints": [
     "static/css/main.f174acb2.css",
-    "static/js/main.fbf218bf.js"
+    "static/js/main.fb8dbcfd.js"
   ]
 }
