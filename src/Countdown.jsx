@@ -35,7 +35,7 @@ export default function Countdown() {
     tick.preload = 'auto';
     tick.volume = 0.45;
 
-    const impact = new Audio((process.env.PUBLIC_URL || '') + '/sounds/impact.mp3');
+    const impact = new Audio('sounds/impact.mp3');
     impact.preload = 'auto';
     impact.volume = 0.8;
 
@@ -81,7 +81,7 @@ export default function Countdown() {
   }, []);
 
   useEffect(() => {
-    const targetDate = new Date('2025-09-01T20:42:00+09:00'); // 9 PM KST
+    const targetDate = new Date('2025-09-01T21:00:00+09:00'); // 9 PM KST
 
     const updateCountdown = () => {
       const now = new Date();
