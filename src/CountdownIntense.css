@@ -1,0 +1,87 @@
+/* Intensified styles for the last 60 minutes and last 60 seconds phases */
+
+.countdown-timer {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Minute phase: MM:SS, bigger and pulsing */
+.countdown-timer--minutes {
+  font-size: clamp(56px, 12vw, 160px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.08em;
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.35),
+    2px 2px 4px #000,
+    0 0 24px rgba(255, 255, 255, 0.2);
+  animation: minute-rise 1.8s ease-in-out infinite;
+}
+
+.countdown-timer--minutes .countdown-seconds {
+  color: #ef4444;
+  text-shadow:
+    0 0 12px rgba(239, 68, 68, 0.8),
+    2px 2px 4px #000;
+}
+
+/* Second phase: SS only, huge and urgent */
+.countdown-timer--seconds {
+  font-size: clamp(84px, 18vw, 240px);
+  font-weight: 1000;
+  color: #ffeded;
+  letter-spacing: 0.12em;
+  text-shadow:
+    0 0 16px rgba(255, 64, 64, 0.9),
+    2px 2px 6px #000,
+    0 0 36px rgba(255, 0, 0, 0.5);
+  animation: second-surge 0.9s ease-in-out infinite;
+}
+
+.countdown-seconds-only {
+  display: inline-block;
+  transform-origin: center;
+}
+
+/* Keyframes */
+@keyframes minute-rise {
+  0% {
+    transform: scale(1);
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 0.25),
+      2px 2px 4px #000,
+      0 0 16px rgba(255, 255, 255, 0.15);
+  }
+  50% {
+    transform: scale(1.04);
+    text-shadow:
+      0 0 18px rgba(255, 255, 255, 0.45),
+      2px 2px 6px #000,
+      0 0 28px rgba(255, 255, 255, 0.25);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow:
+      0 0 12px rgba(255, 255, 255, 0.35),
+      2px 2px 4px #000,
+      0 0 24px rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes second-surge {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  30% {
+    transform: scale(1.06);
+    filter: brightness(1.1);
+  }
+  60% {
+    transform: scale(0.98);
+    filter: brightness(0.95);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}

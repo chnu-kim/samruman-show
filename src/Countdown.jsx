@@ -16,6 +16,7 @@ export default function Countdown() {
     seconds: 0
   });
   const [hasStarted, setHasStarted] = useState(false);
+  const [phase, setPhase] = useState('full'); // 'full' | 'minutes' | 'seconds' | 'elapsed'
 
   useEffect(() => {
     const targetDate = new Date('2025-09-01T21:00:00+09:00'); // 9 PM KST
@@ -32,6 +33,15 @@ export default function Countdown() {
 
         setTimeLeft({days, hours, minutes, seconds});
         setHasStarted(false);
+
+        // Phase handling: ramp up intensity as time approaches
+        if (difference <= 60 * 1000) {
+          setPhase('seconds');
+        } else if (difference <= 60 * 60 * 1000) {
+          setPhase('minutes');
+        } else {
+          setPhase('full');
+        }
       } else {
         const elapsedMs = now.getTime() - targetDate.getTime();
         const days = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
@@ -41,6 +51,7 @@ export default function Countdown() {
 
         setTimeElapsed({days, hours, minutes, seconds});
         setHasStarted(true);
+        setPhase('elapsed');
       }
     };
 
@@ -51,6 +62,7 @@ export default function Countdown() {
   }, []);
 
   const isStarted = hasStarted;
+  const effectivePhase = isStarted ? 'elapsed' : phase;
 
   return (
     <div className="countdown-container">
@@ -80,7 +92,7 @@ export default function Countdown() {
           <span className="title-highlight">삼루먼쇼</span>{isStarted ? '로부터' : '까지'}
         </h1>
 
-        <TimerContainer time={isStarted ? timeElapsed : timeLeft} />
+        <TimerContainer time={isStarted ? timeElapsed : timeLeft} phase={effectivePhase} />
       </div>
     </div>
   );
