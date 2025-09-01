@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './Countdown.css';
+import './ScreenTransition.css';
 import TimerContainer from './TimerContainer';
 
 export default function Countdown() {
@@ -17,6 +18,11 @@ export default function Countdown() {
   });
   const [hasStarted, setHasStarted] = useState(false);
   const [phase, setPhase] = useState('full'); // 'full' | 'minutes' | 'seconds' | 'elapsed'
+  const [showTransition, setShowTransition] = useState(false);
+
+  // Track whether we were still counting down on the previous tick to detect crossing 0
+  const prevPositiveRef = useRef(null);
+  const hasTriggeredTransitionRef = useRef(false);
 
   useEffect(() => {
     const targetDate = new Date('2025-09-01T21:00:00+09:00'); // 9 PM KST
@@ -24,6 +30,10 @@ export default function Countdown() {
     const updateCountdown = () => {
       const now = new Date();
       const difference = targetDate.getTime() - now.getTime();
+
+      // Detect the precise moment we cross from > 0 to <= 0
+      const wasPositive = prevPositiveRef.current === true;
+      const crossedToZero = wasPositive && difference <= 0;
 
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -53,6 +63,17 @@ export default function Countdown() {
         setHasStarted(true);
         setPhase('elapsed');
       }
+
+      // Trigger one-time screen transition exactly at 0
+      if (crossedToZero && !hasTriggeredTransitionRef.current) {
+        hasTriggeredTransitionRef.current = true;
+        setShowTransition(true);
+        // Hide overlay after the animation completes
+        setTimeout(() => setShowTransition(false), 1600);
+      }
+
+      // Update previous sign for next tick
+      prevPositiveRef.current = difference > 0;
     };
 
     updateCountdown();
@@ -94,6 +115,18 @@ export default function Countdown() {
 
         <TimerContainer time={isStarted ? timeElapsed : timeLeft} phase={effectivePhase} />
       </div>
+
+      {showTransition && (
+        <div className="transition-overlay" aria-hidden="true">
+          <div className="transition-flash" />
+          <div className="transition-content">
+            <h2 className="transition-title">
+              <span className="title-highlight">삼루먼쇼</span> 시작
+            </h2>
+            <div className="transition-scanline" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
