@@ -31,11 +31,11 @@ export default function Countdown() {
 
   // Initialize and preload sounds; best-effort unlock on first user gesture
   useEffect(() => {
-    const tick = new Audio('sounds/tick.mp3');
+    const tick = new Audio((process.env.PUBLIC_URL || '') + '/tick.mp3');
     tick.preload = 'auto';
     tick.volume = 0.45;
 
-    const impact = new Audio('sounds/impact.mp3');
+    const impact = new Audio((process.env.PUBLIC_URL || '') + '/impact.mp3');
     impact.preload = 'auto';
     impact.volume = 0.8;
 
@@ -81,7 +81,7 @@ export default function Countdown() {
   }, []);
 
   useEffect(() => {
-    const targetDate = new Date('2025-09-01T21:00:00+09:00'); // 9 PM KST
+    const targetDate = new Date('2025-09-01T20:57:00+09:00'); // 9 PM KST
 
     const updateCountdown = () => {
       const now = new Date();
