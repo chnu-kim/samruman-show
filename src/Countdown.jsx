@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import './Countdown.css';
 import './ScreenTransition.css';
 import TimerContainer from './TimerContainer';
+import ElapsedHours from './ElapsedHours';
 
 export default function Countdown() {
   const [timeLeft, setTimeLeft] = useState({
@@ -19,6 +20,7 @@ export default function Countdown() {
   const [hasStarted, setHasStarted] = useState(false);
   const [phase, setPhase] = useState('full'); // 'full' | 'minutes' | 'seconds' | 'elapsed'
   const [showTransition, setShowTransition] = useState(false);
+  const [showElapsedView, setShowElapsedView] = useState(false);
 
   // Audio refs
   const tickAudioRef = useRef(null);
@@ -198,7 +200,29 @@ export default function Countdown() {
           <span className="title-highlight">삼루먼쇼</span>{isStarted ? '로부터' : '까지'}
         </h1>
 
-        <TimerContainer time={isStarted ? timeElapsed : timeLeft} phase={effectivePhase} />
+        {showElapsedView ? (
+          <ElapsedHours
+            timeElapsed={timeElapsed}
+            onToggle={() => setShowElapsedView(false)}
+          />
+        ) : (
+          <div
+            className="countdown-timer-clickable"
+            role="button"
+            tabIndex={0}
+            onClick={() => setShowElapsedView(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setShowElapsedView(true);
+              }
+            }}
+            style={{ cursor: 'pointer' }}
+            aria-label="카운트다운에서 n시간 경과 보기로 전환"
+          >
+            <TimerContainer time={isStarted ? timeElapsed : timeLeft} phase={effectivePhase} />
+          </div>
+        )}
       </div>
 
       {showTransition && (
