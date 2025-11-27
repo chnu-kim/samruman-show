@@ -22,7 +22,7 @@ export default function ElapsedHours({ timeElapsed, onToggle }) {
       aria-label={`${totalHours}시간 경과 보기에서 카운트다운으로 전환`}
     >
       <div className="countdown-timer">
-        <span className="countdown-seconds">{totalHours}</span>시간 경과
+        <span className="countdown-seconds">{totalHours}</span>시간 기록
       </div>
     </div>
   );

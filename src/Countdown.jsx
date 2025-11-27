@@ -5,6 +5,8 @@ import TimerContainer from './TimerContainer';
 import ElapsedHours from './ElapsedHours';
 
 export default function Countdown() {
+  const MAX_ELAPSED_HOURS = 1834; // 1834시간에서 고정
+
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -30,6 +32,10 @@ export default function Countdown() {
   // Track whether we were still counting down on the previous tick to detect crossing 0
   const prevPositiveRef = useRef(null);
   const hasTriggeredTransitionRef = useRef(false);
+
+  // Freeze and interval management
+  const freezeRef = useRef(false);
+  const intervalRef = useRef(null);
 
   // Initialize and preload sounds; best-effort unlock on first user gesture
   useEffect(() => {
@@ -86,6 +92,9 @@ export default function Countdown() {
     const targetDate = new Date('2025-09-01T21:00:00+09:00'); // 9 PM KST
 
     const updateCountdown = () => {
+      // 이미 1834시간에서 고정된 상태면 더 이상 갱신하지 않음
+      if (freezeRef.current) return;
+
       const now = new Date();
       const difference = targetDate.getTime() - now.getTime();
 
@@ -130,6 +139,25 @@ export default function Countdown() {
         }
       } else {
         const elapsedMs = now.getTime() - targetDate.getTime();
+        const totalElapsedHours = Math.floor(elapsedMs / (1000 * 60 * 60));
+
+        // 1834시간 이상이면 1834시간(= 76일 10시간)으로 고정하고 더 이상 업데이트하지 않음
+        if (totalElapsedHours >= MAX_ELAPSED_HOURS) {
+          const frozenDays = Math.floor(MAX_ELAPSED_HOURS / 24); // 1834 / 24 = 76
+          const frozenHours = MAX_ELAPSED_HOURS % 24;            // 1834 % 24 = 10
+          setTimeElapsed({ days: frozenDays, hours: frozenHours, minutes: 0, seconds: 0 });
+          setHasStarted(true);
+          setPhase('elapsed');
+          freezeRef.current = true;
+
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+          return;
+        }
+
+        // 아직 1834시간 미만이면 정상적으로 경과 시간 표시
         const days = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
         const hours = Math.floor((elapsedMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((elapsedMs % (1000 * 60 * 60)) / (1000 * 60));
@@ -164,9 +192,15 @@ export default function Countdown() {
     };
 
     updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
+    const id = setInterval(updateCountdown, 1000);
+    intervalRef.current = id;
 
-    return () => clearInterval(interval);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
   }, []);
 
   const isStarted = hasStarted;
@@ -197,7 +231,7 @@ export default function Countdown() {
 
       <div className="countdown-content">
         <h1 className="countdown-title">
-          <span className="title-highlight">삼루먼쇼</span>{isStarted ? '로부터' : '까지'}
+          <span className="title-highlight">삼루먼쇼</span>{isStarted ? '종료' : '까지'}
         </h1>
 
         {showElapsedView ? (
